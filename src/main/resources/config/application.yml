@@ -2,3 +2,5 @@ spring:
   application:
     name: kas-test
 
+swagger:
+  enabled: true

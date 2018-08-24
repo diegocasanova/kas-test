@@ -48,197 +48,32 @@
         <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
 
         <!-- Swagger -->
-        <openapi-codegen.plugin.version>3.2.1</openapi-codegen.plugin.version>
         <swagger.core.version>1.5.19</swagger.core.version>
         <springfox.version>2.9.2</springfox.version>
+
+        <!-- OpenAPI -->
+        <openapi-codegen.plugin.version>3.2.1</openapi-codegen.plugin.version>
+        <openapi-codegen.api.spec>${project.basedir}/src/main/resources/api/spec.yml</openapi-codegen.api.spec>
+        <openapi-codegen.server.api.package>com.casanova.kas.test.api</openapi-codegen.server.api.package>
+        <openapi-codegen.client.model.package>com.casanova.kas.test.api.model</openapi-codegen.client.model.package>
 
     </properties>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-boot.version}</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>repackage</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <!-- Compiler plugin -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven-compiler-plugin.version}</version>
-                    <configuration>
-                        <source>${maven.compiler.source}</source>
-                        <target>${maven.compiler.target}</target>
-                        <encoding>${project.build.sourceEncoding}</encoding>
-                        <annotationProcessorPaths>
-                            <path>
-                                <groupId>org.mapstruct</groupId>
-                                <artifactId>mapstruct-processor</artifactId>
-                                <version>${mapstruct.version}</version>
-                            </path>
-                            <path>
-                                <groupId>org.projectlombok</groupId>
-                                <artifactId>lombok</artifactId>
-                                <version>${lombok.version}</version>
-                            </path>
-                        </annotationProcessorPaths>
-                    </configuration>
-                </plugin>
-                <!-- Jacoco Plugin -->
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${jacoco-maven-plugin.version}</version>
-                    <executions>
-                        <!-- Prepares the property pointing to the JaCoCo runtime agent which
-                             is passed as VM argument when Maven the Surefire plugin is executed. -->
-
-                        <execution>
-                            <id>pre-unit-test</id>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                            <configuration>
-                                <!-- Sets the path to the file which contains the execution data. -->
-                                <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
-                                <!-- Sets the name of the property containing the settings for JaCoCo
-                                     runtime agent. -->
-                                <propertyName>surefireArgLine</propertyName>
-                            </configuration>
-                        </execution>
-                        <!-- Ensures that the code coverage report for unit tests is created
-                             after unit tests have been run. -->
-                        <execution>
-                            <id>post-unit-test</id>
-                            <phase>test</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                            <configuration>
-                                <!-- Sets the path to the file which contains the execution data. -->
-                                <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
-                                <!-- Sets the output directory for the code coverage report. -->
-                                <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
-                            </configuration>
-                        </execution>
-                        <!-- The Executions required by unit tests are omitted. -->
-                        <!-- Prepares the property pointing to the JaCoCo runtime agent which
-                             is passed as VM argument when Maven the Failsafe plugin is executed. -->
-                        <execution>
-                            <id>pre-integration-test</id>
-                            <phase>pre-integration-test</phase>
-                            <goals>
-                                <goal>prepare-agent-integration</goal>
-                            </goals>
-                            <configuration>
-                                <!-- Sets the path to the file which contains the execution data. -->
-                                <destFile>${project.build.directory}/coverage-reports/jacoco-it.exec</destFile>
-                                <skip>${skip.integration.tests}</skip>
-                                <!-- Sets the name of the property containing the settings for JaCoCo runtime agent. -->
-                                <propertyName>failsafeArgIntegrationLine</propertyName>
-                            </configuration>
-                        </execution>
-                        <!-- Ensures that the code coverage report for integration tests after
-                             integration tests have been run. -->
-                        <execution>
-                            <id>post-integration-test</id>
-                            <phase>post-integration-test</phase>
-                            <goals>
-                                <goal>report-integration</goal>
-                            </goals>
-                            <configuration>
-                                <!-- Sets the path to the file which contains the execution data. -->
-                                <dataFile>${project.build.directory}/coverage-reports/jacoco-it.exec</dataFile>
-                                <skip>${skip.integration.tests}</skip>
-                                <!-- Sets the output directory for the code coverage report. -->
-                                <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
-                            </configuration>
-                        </execution>
-                        <!-- Merge a set of execution data files (*.exec) into a single file -->
-                        <execution>
-                            <id>merge-results</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>merge</goal>
-                            </goals>
-                            <configuration>
-                                <fileSets>
-                                    <fileSet>
-                                        <!-- Sets the path to the file which contains the execution data. -->
-                                        <directory>${project.build.directory}/coverage-reports</directory>
-                                        <includes>
-                                            <include>*.exec</include>
-                                        </includes>
-                                    </fileSet>
-                                </fileSets>
-                                <!-- Sets the path to the file which contains the merged execution data. -->
-                                <destFile>${project.build.directory}/coverage-reports/aggregate.exec</destFile>
-                            </configuration>
-                        </execution>
-
-                        <execution>
-                            <id>post-merge-report</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                            <configuration>
-                                <dataFile>${project.build.directory}/coverage-reports/aggregate.exec</dataFile>
-                                <outputDirectory>${project.reporting.outputDirectory}/jacoco-aggregate</outputDirectory>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
-                    <configuration>
-                        <!-- Sets the VM argument line used when unit tests are run. -->
-                        <argLine>${surefireArgLine}</argLine>
-                        <!-- Skips unit tests if the value of skip.unit.tests property is true -->
-                        <skipTests>${skip.unit.tests}</skipTests>
-                        <!-- Excludes integration tests when unit tests are run. -->
-                        <excludes>
-                            <exclude>**/*ITTest.java</exclude>
-                        </excludes>
-                    </configuration>
-                </plugin>
-                <!-- ITTest -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>${maven-failsafe-plugin.version}</version>
-                    <executions>
-                        <!-- Integration tests -->
-                        <execution>
-                            <id>integration-test</id>
-                            <goals>
-                                <goal>integration-test</goal>
-                                <goal>verify</goal>
-                            </goals>
-                            <configuration>
-                                <argLine>${failsafeArgIntegrationLine}</argLine>
-                                <skipTests>${skip.integration.tests}</skipTests>
-                                <includes>
-                                    <include>**/*ITTest.java</include>
-                                </includes>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Compiler plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -247,20 +82,210 @@
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
+            <!-- Generate sources -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- OpenAPI - generate source plugins -->
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-codegen.plugin.version}</version>
+                <executions>
+                    <!-- server API source generation-->
+                    <execution>
+                        <id>generate-openapi-server</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${openapi-codegen.api.spec}</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <apiPackage>${openapi-codegen.server.api.package}</apiPackage>
+                            <modelPackage>${openapi-codegen.client.model.package}</modelPackage>
+                            <addCompileSourceRoot>true</addCompileSourceRoot>
+                            <supportingFilesToGenerate>
+                                HomeController.java,OpenAPIDocumentationConfig.java,ApiUtil.java
+                            </supportingFilesToGenerate>
+                            <configOptions>
+                                <sourceFolder>.</sourceFolder>
+                                <useBeanValidation>true</useBeanValidation>
+                                <delegatePattern>true</delegatePattern>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Jacoco Plugin -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin.version}</version>
+                <executions>
+                    <!-- Prepares the property pointing to the JaCoCo runtime agent which
+                         is passed as VM argument when Maven the Surefire plugin is executed. -->
+
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the path to the file which contains the execution data. -->
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
+                            <!-- Sets the name of the property containing the settings for JaCoCo
+                                 runtime agent. -->
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <!-- Ensures that the code coverage report for unit tests is created
+                         after unit tests have been run. -->
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the path to the file which contains the execution data. -->
+                            <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+                            <!-- Sets the output directory for the code coverage report. -->
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <!-- The Executions required by unit tests are omitted. -->
+                    <!-- Prepares the property pointing to the JaCoCo runtime agent which
+                         is passed as VM argument when Maven the Failsafe plugin is executed. -->
+                    <execution>
+                        <id>pre-integration-test</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>prepare-agent-integration</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the path to the file which contains the execution data. -->
+                            <destFile>${project.build.directory}/coverage-reports/jacoco-it.exec</destFile>
+                            <skip>${skip.integration.tests}</skip>
+                            <!-- Sets the name of the property containing the settings for JaCoCo runtime agent. -->
+                            <propertyName>failsafeArgIntegrationLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <!-- Ensures that the code coverage report for integration tests after
+                         integration tests have been run. -->
+                    <execution>
+                        <id>post-integration-test</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>report-integration</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Sets the path to the file which contains the execution data. -->
+                            <dataFile>${project.build.directory}/coverage-reports/jacoco-it.exec</dataFile>
+                            <skip>${skip.integration.tests}</skip>
+                            <!-- Sets the output directory for the code coverage report. -->
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <!-- Merge a set of execution data files (*.exec) into a single file -->
+                    <execution>
+                        <id>merge-results</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>merge</goal>
+                        </goals>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <!-- Sets the path to the file which contains the execution data. -->
+                                    <directory>${project.build.directory}/coverage-reports</directory>
+                                    <includes>
+                                        <include>*.exec</include>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                            <!-- Sets the path to the file which contains the merged execution data. -->
+                            <destFile>${project.build.directory}/coverage-reports/aggregate.exec</destFile>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>post-merge-report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <dataFile>${project.build.directory}/coverage-reports/aggregate.exec</dataFile>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-aggregate</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <!-- Sets the VM argument line used when unit tests are run. -->
+                    <argLine>${surefireArgLine}</argLine>
+                    <!-- Skips unit tests if the value of skip.unit.tests property is true -->
+                    <skipTests>${skip.unit.tests}</skipTests>
+                    <!-- Excludes integration tests when unit tests are run. -->
+                    <excludes>
+                        <exclude>**/*ITTest.java</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
+            <!-- ITTest -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-plugin.version}</version>
+                <executions>
+                    <!-- Integration tests -->
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <argLine>${failsafeArgIntegrationLine}</argLine>
+                            <skipTests>${skip.integration.tests}</skipTests>
+                            <includes>
+                                <include>**/*ITTest.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
+
+
         </plugins>
 
     </build>
