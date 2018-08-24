@@ -1,0 +1,30 @@
+# Eclipse
+.classpath
+.project
+.settings/
+.pmd*
+.checkstyle
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+.mvn/
+
+# Spring Plugin
+.springBeans
+
+# Logs
+*.log
+
+# Netbeans
+nbactions.xml
+nb-configuration.xml
+
