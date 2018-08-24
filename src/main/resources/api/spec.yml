@@ -1,0 +1,94 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: KAS Test
+  description: KAS Test API
+servers:
+  - url: http://localhost:8080/v1
+paths:
+  /packages:
+    get:
+      summary: List Packages
+      operationId: listPackages
+      tags:
+        - packages
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 100
+            default: 10
+        - name: offset
+          in: query
+          description: The number of items to skip before starting to collect the result set
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            default: 0
+        - name: lang
+          in: query
+          description: The language for the
+          required: false
+          schema:
+            type: string
+            enum:
+              - ca
+              - en
+              - es
+            default: ca
+      responses:
+        '200':
+          description: A paged array of packages
+          headers:
+            x-total-count:
+              description: Total count of results
+              schema:
+                type: string
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ApiPackage"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    ApiPackage:
+      required:
+        - code
+        - organizationDescription
+        - url
+      properties:
+        code:
+          type: string
+        organizationDescription:
+          type: string
+        url:
+          type: string
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
