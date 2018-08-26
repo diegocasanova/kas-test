@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: kas-test
+  cache:
+    type: none
+
+swagger:
+  enabled: false
+
+kas-test:
+  packages:
+    rest:
+      baseUrl: http://localhost:${wiremock.server.port}/
+    service:
+      defaultLimit: 10
+    api:
+      defaultLang: ca
+

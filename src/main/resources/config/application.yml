@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: kas-test
+  jackson:
+    default-property-inclusion: NON_NULL
+  cache:
+    type: simple
+
+swagger:
+  enabled: true
+
+kas-test:
+  packages:
+    rest:
+      baseUrl: http://opendata-ajuntament.barcelona.cat/
+    service:
+      defaultLimit: 10
+    api:
+      defaultLang: ca
+
+
+#Metrics related configurations
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+    info:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "health, prometheus, metrics, metrics-requiredMetricName, hystrix.stream, info"
+  metrics:
+    export:
+      prometheus:
+        enabled: true
