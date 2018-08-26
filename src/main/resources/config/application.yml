@@ -23,3 +23,22 @@ kas-test:
       defaultLimit: 10
     api:
       defaultLang: ca
+
+
+#Metrics related configurations
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+    info:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "health, prometheus, metrics, metrics-requiredMetricName, hystrix.stream, info"
+  metrics:
+    export:
+      prometheus:
+        enabled: true
