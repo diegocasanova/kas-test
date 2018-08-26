@@ -14,17 +14,15 @@ public class PackageServiceImpl implements PackageService {
 
     private final PackageDTOMapper mapper;
     private final PackageClient packageClient;
-    private final Integer defaultOffset;
     private final Integer defaultLimit;
 
 
     @Override
     public PackagesDTO getPackages(final Integer limit, final Integer offset, final String lang,
                                              final String query) {
-        val start = Optional.ofNullable(offset).orElse(defaultOffset);
         val max = Optional.ofNullable(limit).orElse(defaultLimit);
 
-        val result = invokeClient(max, start, query);
+        val result = invokeClient(max, offset, query);
 
         return mapper.packageResultToDTO(result, lang);
     }

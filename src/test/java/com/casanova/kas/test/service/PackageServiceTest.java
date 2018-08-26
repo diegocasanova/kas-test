@@ -27,7 +27,7 @@ public class PackageServiceTest {
     public void setup() {
         mapper = mock(PackageDTOMapper.class);
         packageClient = mock(PackageClient.class);
-        packageService = new PackageServiceImpl(mapper, packageClient, DEFAULT_OFFSET, DEFAULT_LIMIT);
+        packageService = new PackageServiceImpl(mapper, packageClient, DEFAULT_LIMIT);
     }
 
     @Test
@@ -43,11 +43,11 @@ public class PackageServiceTest {
     @Test
     public void shouldUseDefaultValuesIfNullParameters() {
         val pkgResult = samplePkgResult();
-        when(packageClient.getPackages(DEFAULT_LIMIT, DEFAULT_OFFSET, "query")).thenReturn(pkgResult);
+        when(packageClient.getPackages(DEFAULT_LIMIT, null, "query")).thenReturn(pkgResult);
         when(mapper.packageResultToDTO(pkgResult, LANGUAGE_SP)).thenReturn(samplePkgsDTO());
         val result = packageService.getPackages(null, null, LANGUAGE_SP, "query");
         verify(mapper, times(1)).packageResultToDTO(pkgResult, LANGUAGE_SP);
-        verify(packageClient, times(1)).getPackages(DEFAULT_LIMIT, DEFAULT_OFFSET, "query");
+        verify(packageClient, times(1)).getPackages(DEFAULT_LIMIT, null, "query");
     }
 
 

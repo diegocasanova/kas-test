@@ -12,7 +12,6 @@ kas-test:
     rest:
       baseUrl: http://opendata-ajuntament.barcelona.cat/
     service:
-      defaultOffset: 0
       defaultLimit: 10
     api:
       defaultLang: ca

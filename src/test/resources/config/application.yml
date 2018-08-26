@@ -10,7 +10,6 @@ kas-test:
     rest:
       baseUrl: http://localhost:${wiremock.server.port}/
     service:
-      defaultOffset: 0
       defaultLimit: 10
     api:
       defaultLang: ca

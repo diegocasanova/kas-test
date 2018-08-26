@@ -18,9 +18,6 @@ import javax.validation.constraints.NotNull;
 public class ServiceConfig {
 
     @NotNull
-    private Integer defaultOffset;
-
-    @NotNull
     private Integer defaultLimit;
 
     @Bean
@@ -31,6 +28,6 @@ public class ServiceConfig {
     @Bean
     public PackageService packageRestService(final PackageDTOMapper packageDTOMapper,
                                          final PackageClient packageClient) {
-        return new PackageServiceImpl(packageDTOMapper, packageClient, defaultOffset, defaultLimit);
+        return new PackageServiceImpl(packageDTOMapper, packageClient, defaultLimit);
     }
 }
