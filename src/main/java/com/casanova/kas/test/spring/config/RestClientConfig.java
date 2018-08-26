@@ -2,7 +2,7 @@ package com.casanova.kas.test.spring.config;
 
 import com.casanova.kas.test.rest.PackageClient;
 import com.casanova.kas.test.rest.PackageRestClient;
-import com.casanova.kas.test.rest.PackageRestClientImpl;
+import com.casanova.kas.test.rest.PackageClientRestImpl;
 import com.casanova.kas.test.rest.mapper.PackageDesearializer;
 import com.casanova.kas.test.rest.mapper.PackageResultDeserializer;
 import com.casanova.kas.test.rest.model.Package;
@@ -43,6 +43,6 @@ public class RestClientConfig {
 
     @Bean
     public PackageClient packageClient(final PackageRestClient packageRestClient) {
-        return new PackageRestClientImpl(packageRestClient);
+        return new PackageClientRestImpl(packageRestClient);
     }
 }

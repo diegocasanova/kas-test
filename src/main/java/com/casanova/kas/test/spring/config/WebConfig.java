@@ -8,6 +8,7 @@ import com.casanova.kas.test.web.mapper.PackageApiMapper;
 import lombok.Setter;
 import org.mapstruct.factory.Mappers;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,6 +20,7 @@ import javax.validation.constraints.NotEmpty;
 @Configuration
 @ConfigurationProperties(prefix = "kas-test.packages.api")
 @ComponentScan(basePackages = "com.casanova.kas.test..web.exception")
+@EnableCircuitBreaker
 @Setter
 public class WebConfig {
 
