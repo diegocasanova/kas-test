@@ -7,5 +7,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConditionalOnProperty("swagger.enabled")
 @ComponentScan({"org.openapitools.configuration"})
-public class ApiConfig {
+public class SwaggerConfig {
 }
