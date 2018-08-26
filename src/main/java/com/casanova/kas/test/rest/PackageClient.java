@@ -5,6 +5,6 @@ import org.springframework.cache.annotation.Cacheable;
 
 public interface PackageClient {
 
-    @Cacheable("packages")
+    @Cacheable(value = "packages", unless = "#result.success==false")
     PackageResult getPackages(Integer limit, Integer offset, String query);
 }

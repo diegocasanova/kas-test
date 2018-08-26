@@ -44,7 +44,8 @@ public class PackageClientRestImpl implements PackageClient {
     }
 
     public PackageResult fallbackGetPackages(final Integer limit, final Integer offset, final String query) {
-        log.warn("Something went wrong!!! Executing the fallback method to obtain Packages.");
+        log.warn("Something went wrong!!! Executing the fallback method to obtain Packages. " +
+            "Params - limit {}, offset {}, query {}", limit, offset, query);
         return PackageResult.builder()
             .success(false)
             .count(0)
