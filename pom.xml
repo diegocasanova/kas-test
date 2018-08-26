@@ -7,6 +7,8 @@
     <groupId>com.casanova</groupId>
     <artifactId>kas-test</artifactId>
     <version>0.1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>kas-test</name>
 
 
     <properties>
@@ -64,6 +66,7 @@
     </properties>
 
     <build>
+        <finalName>${project.name}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

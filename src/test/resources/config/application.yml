@@ -1,6 +1,8 @@
 spring:
   application:
     name: kas-test
+  cache:
+    type: none
 
 swagger:
   enabled: false
