@@ -22,7 +22,7 @@ public class GsonDeserializersTest {
     private Gson gson;
 
     @Before
-    public void setup() throws IOException, URISyntaxException {
+    public void setup() {
         val gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(Package.class, new PackageDesearializer());
         gsonBuilder.registerTypeAdapter(PackageResult.class, new PackageResultDeserializer());
@@ -41,9 +41,9 @@ public class GsonDeserializersTest {
         val first = packageResult.getPackages().get(0);
         assertThat(first.getCode()).isEqualTo("CATALEG_OPENDATA");
         assertThat(first.getOrganizationDescription()).isEqualTo("Public sector");
-        assertThat(first.getUrlCa()).isEqualTo("http://opendata-ajuntament.barcelona.cat/");
-        assertThat(first.getUrlEn()).isEqualTo("http://opendata-ajuntament.barcelona.cat/en/");
-        assertThat(first.getUrlSp()).isEqualTo("http://opendata-ajuntament.barcelona.cat/es/");
+        assertThat(first.getUrlByLanguage("ca")).isEqualTo("http://opendata-ajuntament.barcelona.cat/");
+        assertThat(first.getUrlByLanguage("en")).isEqualTo("http://opendata-ajuntament.barcelona.cat/en/");
+        assertThat(first.getUrlByLanguage("es")).isEqualTo("http://opendata-ajuntament.barcelona.cat/es/");
     }
 
     @Test(expected = JsonSyntaxException.class)

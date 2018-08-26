@@ -3,7 +3,6 @@ package com.casanova.kas.test.web.api;
 import com.casanova.kas.test.api.PackagesApiDelegate;
 import com.casanova.kas.test.api.model.ApiPackage;
 import com.casanova.kas.test.service.PackageService;
-import com.casanova.kas.test.service.model.Language;
 import com.casanova.kas.test.service.model.PackagesDTO;
 import com.casanova.kas.test.web.mapper.PackageApiMapper;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +31,7 @@ public class PackagesApiBackend implements PackagesApiDelegate {
                                                   final String  lang,
                                                   final String  query) {
 
-        val language = resolveLanguage(lang);
+        val language = Optional.ofNullable(lang).orElse(defaultLang);
         val obtainedPackages = service.getPackages(limit, offset, language, query);
         val packages = mapper.toApiPackages(obtainedPackages.getPackages());
         val headers = getHeaders(obtainedPackages);
@@ -40,10 +39,6 @@ public class PackagesApiBackend implements PackagesApiDelegate {
         return new ResponseEntity<>(packages, headers, HttpStatus.OK);
     }
 
-    private Language resolveLanguage(final String lang) {
-        val language = Optional.ofNullable(lang).orElse(defaultLang);
-        return Language.fromString(language);
-    }
 
     private HttpHeaders getHeaders(final PackagesDTO packages) {
         HttpHeaders headers = new HttpHeaders();

@@ -2,7 +2,6 @@ package com.casanova.kas.test.service.mapper;
 
 import com.casanova.kas.test.rest.model.Package;
 import com.casanova.kas.test.rest.model.PackageResult;
-import com.casanova.kas.test.service.model.Language;
 import com.casanova.kas.test.service.model.PackageDTO;
 import com.casanova.kas.test.service.model.PackagesDTO;
 import org.mapstruct.Context;
@@ -19,16 +18,16 @@ public abstract class PackageDTOMapper {
     public static PackageDTOMapper INSTANCE = Mappers.getMapper( PackageDTOMapper.class );
 
     @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
-    public abstract List<PackageDTO> toPackagesDTO(List<Package> packages, @Context Language language);
+    public abstract List<PackageDTO> toPackagesDTO(List<Package> packages, @Context String language);
 
-    public abstract PackagesDTO packageResultToDTO(PackageResult result, @Context Language language);
+    public abstract PackagesDTO packageResultToDTO(PackageResult result, @Context String language);
 
 
-    public PackageDTO packageToPackageDto(final Package pkg, @Context final Language language) {
+    public PackageDTO packageToPackageDto(final Package pkg, @Context final String language) {
         return PackageDTO.builder()
             .code(pkg.getCode())
             .organizationDescription(pkg.getOrganizationDescription())
-            .url(pkg.getUrlByLang(language))
+            .url(pkg.getUrlByLanguage(language))
             .build();
     }
 }

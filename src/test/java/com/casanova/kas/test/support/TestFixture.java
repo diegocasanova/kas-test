@@ -8,6 +8,7 @@ import com.casanova.kas.test.service.model.PackagesDTO;
 import lombok.val;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class TestFixture {
@@ -17,12 +18,14 @@ public class TestFixture {
     }
 
     public static Package samplePkg(final String code, final String description) {
+        val urlMap = new HashMap<String, String>();
+        urlMap.put("ca", "http://cat");
+        urlMap.put("en", "http://eng");
+        urlMap.put("es", "http://spa");
         return Package.builder()
             .code(code)
             .organizationDescription(description)
-            .urlCa("http://cat")
-            .urlEn("http://eng")
-            .urlSp("http://spa")
+            .urls(urlMap)
             .build();
     }
 

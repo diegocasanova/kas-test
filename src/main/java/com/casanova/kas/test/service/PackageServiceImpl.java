@@ -1,15 +1,12 @@
 package com.casanova.kas.test.service;
 
 import com.casanova.kas.test.rest.PackageClient;
-import com.casanova.kas.test.web.exception.PackageRestException;
 import com.casanova.kas.test.rest.model.PackageResult;
 import com.casanova.kas.test.service.mapper.PackageDTOMapper;
-import com.casanova.kas.test.service.model.Language;
 import com.casanova.kas.test.service.model.PackagesDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 
-import java.io.IOException;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -22,7 +19,7 @@ public class PackageServiceImpl implements PackageService {
 
 
     @Override
-    public PackagesDTO getPackages(final Integer limit, final Integer offset, final Language lang,
+    public PackagesDTO getPackages(final Integer limit, final Integer offset, final String lang,
                                              final String query) {
         val start = Optional.ofNullable(offset).orElse(defaultOffset);
         val max = Optional.ofNullable(limit).orElse(defaultLimit);

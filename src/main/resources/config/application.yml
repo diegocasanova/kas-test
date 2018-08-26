@@ -1,6 +1,8 @@
 spring:
   application:
     name: kas-test
+  jackson:
+    default-property-inclusion: NON_NULL
 
 swagger:
   enabled: true
@@ -14,3 +16,5 @@ kas-test:
       defaultLimit: 10
     api:
       defaultLang: ca
+
+

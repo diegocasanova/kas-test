@@ -31,7 +31,7 @@ public class PackageRestClientITTest {
         val first = packages.getPackages().get(0);
         assertThat(first.getCode()).isEqualTo("CATALEG_OPENDATA");
         assertThat(first.getOrganizationDescription()).isEqualTo("Public sector");
-        assertThat(first.getUrlCa()).isEqualTo("http://opendata-ajuntament.barcelona.cat/");
+        assertThat(first.getUrlByLanguage("ca")).isEqualTo("http://opendata-ajuntament.barcelona.cat/");
     }
 
     @Test(expected = PackageRestException.class)

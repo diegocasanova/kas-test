@@ -5,6 +5,9 @@ import com.google.gson.*;
 import lombok.val;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class PackageDesearializer implements JsonDeserializer<Package> {
 
@@ -17,16 +20,17 @@ public class PackageDesearializer implements JsonDeserializer<Package> {
         val orgJson = jsonObject.get("organization").getAsJsonObject();
         val orgDescription = orgJson.get("description").getAsString();
         val urlsJson = jsonObject.get("url_tornada").getAsJsonObject();
-        val urlCa = urlsJson.get("ca").getAsString();
-        val urlEn = urlsJson.get("en").getAsString();
-        val urlSp = urlsJson.get("es").getAsString();
+
+        val urlMap = new HashMap<String, String>();
+        Set<Map.Entry<String, JsonElement>> entrySet = urlsJson.entrySet();
+        for (Map.Entry<String, JsonElement> entry : entrySet){
+            urlMap.put(entry.getKey(), urlsJson.get(entry.getKey()).getAsString());
+        }
 
         return Package.builder()
             .code(code)
             .organizationDescription(orgDescription)
-            .urlCa(urlCa)
-            .urlEn(urlEn)
-            .urlSp(urlSp)
+            .urls(urlMap)
             .build();
     }
 }
