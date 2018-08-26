@@ -46,7 +46,7 @@ public class ExceptionTranslatorTest {
     @Test
     public void shouldHandlePackageRestException() {
         when(messageResourceResolver.getMessage(PACKAGE_REST_EX_MSG)).thenReturn(I18N_MESSAGE);
-        val exception = new PackageRestException(null);
+        val exception = new PackageRestException();
         val error = exceptionTranslator.processBaseApiException(exception);
         assertThat(error.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
         assertThat(error.getBody().getCode()).isEqualTo(PACKAGE_REST_EX_CODE);

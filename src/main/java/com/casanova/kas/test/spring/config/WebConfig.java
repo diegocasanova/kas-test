@@ -48,7 +48,7 @@ public class WebConfig {
     @Bean
     public PackagesApiDelegate packagesApiDelegate(final PackageApiMapper packageApiMapper,
                                                    final PackageService packageService) {
-        return new PackagesApiBackend(packageApiMapper, packageService, defaultLang);
+        return new PackagesApiBackend(packageService, packageApiMapper, defaultLang);
     }
 
 }

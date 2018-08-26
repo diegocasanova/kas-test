@@ -17,8 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class GsonDeserializersTest {
 
-    private static final String JSON_OK_PATH = "packages_response_ok.json";
-    private static final String JSON_INCORRECT_PATH = "packages_response_incorrect.json";
+    private static final String JSON_OK_PATH = "wiremock/__files/packages_response_ok.json";
+    private static final String JSON_INCORRECT_PATH = "wiremock/__files/packages_response_incorrect.json";
     private Gson gson;
 
     @Before

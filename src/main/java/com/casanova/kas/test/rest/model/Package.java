@@ -15,12 +15,19 @@ public class Package {
     private String organizationDescription;
 
     public String getUrlByLang(final Language language) {
+        String url = "";
         switch (language) {
-            case CATALAN: return urlCa;
-            case ENGLISH: return urlEn;
-            case SPANISH: return urlSp;
-            default: throw new IllegalArgumentException("Language is not supported.");
+            case CATALAN:
+                url = urlCa;
+                break;
+            case ENGLISH:
+                url = urlEn;
+                break;
+            case SPANISH:
+                url = urlSp;
+                break;
         }
+        return url;
     }
 
 }

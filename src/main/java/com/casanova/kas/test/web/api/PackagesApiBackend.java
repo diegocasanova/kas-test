@@ -21,8 +21,8 @@ public class PackagesApiBackend implements PackagesApiDelegate {
 
     private static final String COUNT_RESULT_HEADER = "X-Total-Count";
 
-    private final PackageApiMapper mapper;
     private final PackageService service;
+    private final PackageApiMapper mapper;
     @NotNull
     private final String defaultLang;
 
